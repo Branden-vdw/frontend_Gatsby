@@ -1,10 +1,17 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import Navbar from 'react-bootstrap'
 
 const Layout = ({ location, title, children }) => {
   const rootPath = `${__PATH_PREFIX__}/`
   const isRootPath = location.pathname === rootPath
   let header
+
+<Container>
+  <Navbar expand="lg" variant="light" bg="light">
+    <Navbar.Brand> <Link to="/">{title}</Link></Navbar.Brand>
+  </Navbar>
+</Container>
 
   if (isRootPath) {
     header = (
