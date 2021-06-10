@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `My animals \u2122`,
+    title: `Wild Animals \u2122`,
     author: {
       name: `Kyle Mathews`,
       summary: `who lives and works in San Francisco building useful things.`,
