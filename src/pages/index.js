@@ -29,8 +29,8 @@ const BlogIndex = ({ data, location }) => {
           const title = post.frontmatter.title || post.fields.slug
 
           return (
-            <li key={post.fields.slug}>
-              <article
+            <div className= "grid-container" key={post.fields.slug}>
+              <div><article
                 className="post-list-item"
                 itemScope
                 itemType="http://schema.org/Article"
@@ -51,8 +51,8 @@ const BlogIndex = ({ data, location }) => {
                     itemProp="description"
                   />
                 </section>
-              </article>
-            </li>
+              </article></div>
+            </div>
           )
         })}
       </ol>

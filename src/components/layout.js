@@ -34,17 +34,18 @@ const Layout = ({ location, title, children }) => {
 //   //</Router>
 // //</React.Fragment> 
   return (
-    <Container data-is-root-path={isRootPath}>
+    <div className = "global-wrapper" data-is-root-path={isRootPath}>
       <Nav/>
-      <header className="global-header">{header}</header>
+      <div><header className="global-header">{header}</header></div>
       <main>
-      <FeatureImage/>{children}</main>
+      {children}
+      </main>
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
         <a href="https://www.gatsbyjs.com">Gatsby</a>
       </footer>
-    </Container>
+    </div>
   )
 }
 

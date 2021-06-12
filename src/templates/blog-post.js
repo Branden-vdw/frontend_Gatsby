@@ -1,12 +1,13 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
+import { GatsbyImage, getImage} from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
-  const HeroImage = data.markdownRemark.frontmatter.image.absolutePath.fixed/** Add code to get image from query here **/
+  const HeroImage = getImage(data.markdownRemark.frontmatter.image)/** Add code to get image from query here **/
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
 
@@ -22,7 +23,7 @@ const BlogPostTemplate = ({ data, location }) => {
         itemType="http://schema.org/Article"
       >
         <header>
-        <img src={HeroImage} alt = "this is a picture"/>
+        <GatsbyImage image={HeroImage} alt = "this is a picture" />
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
         </header>
@@ -84,17 +85,13 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         description
         image {
-          absolutePath
           childImageSharp {
-          fixed {
-            base64
-            tracedSVG
-            aspectRatio
-            srcWebp
-            srcSetWebp
-            originalName
-          }
-        }
+            gatsbyImageData(
+         layout: FIXED
+         placeholder: BLURRED
+         formats: [AUTO, WEBP, AVIF]
+       )
+        }            
       }
     }
     }
