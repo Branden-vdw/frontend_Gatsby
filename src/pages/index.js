@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -27,6 +28,7 @@ const BlogIndex = ({ data, location }) => {
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
+          const PostImage = getImage(post.frontmatter.image)
 
           return (
             <div className= "grid-container" key={post.fields.slug}>
@@ -36,6 +38,7 @@ const BlogIndex = ({ data, location }) => {
                 itemType="http://schema.org/Article"
               >
                 <header>
+                  <GatsbyImage image = {PostImage} alt = "is not wworking"/>
                   <h2>
                     <Link to={post.fields.slug} itemProp="url">
                       <span itemProp="headline">{title}</span>
@@ -79,6 +82,15 @@ export const pageQuery = graphql`
           date(formatString: "MMMM DD, YYYY")
           title
           description
+          image {
+              childImageSharp {
+            gatsbyImageData(
+            layout: FIXED
+            placeholder: BLURRED
+            formats: [AUTO, WEBP, AVIF]
+              )
+           }
+          }
         }
       }
     }
