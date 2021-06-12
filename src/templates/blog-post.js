@@ -6,7 +6,7 @@ import SEO from "../components/seo"
 
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
-  /** Add code to get image from query here **/
+  const HeroImage = data.markdownRemark.frontmatter.image.absolutePath.fixed/** Add code to get image from query here **/
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
 
@@ -22,6 +22,7 @@ const BlogPostTemplate = ({ data, location }) => {
         itemType="http://schema.org/Article"
       >
         <header>
+        <img src={HeroImage} alt = "this is a picture"/>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
         </header>
@@ -65,7 +66,7 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostBySlug(
-    $id: String!
+    $id: String
     $previousPostId: String
     $nextPostId: String
   ) {
@@ -82,8 +83,20 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
-        # Add gatsby image query here
+        image {
+          absolutePath
+          childImageSharp {
+          fixed {
+            base64
+            tracedSVG
+            aspectRatio
+            srcWebp
+            srcSetWebp
+            originalName
+          }
+        }
       }
+    }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
       fields {

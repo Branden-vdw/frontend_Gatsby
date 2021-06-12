@@ -58,6 +58,40 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 }
 
+//  exports.createPages = async ({ actions, graphql}) => {
+//   const {data} = await graphql(`
+//        query {
+//      allMarkdownRemark(sort: {order: DESC, fields: frontmatter___date}) {
+//      nodes {
+//        fields {
+//          slug
+//        }
+//        id
+//      }
+//    }
+//      }  
+//   `)
+//    //Create paginated pages for posts
+//    const postPerPage = 3
+
+//    const numPages = Math.ceil(data.allMarkdownRemark.edges.length / postPerPage)
+
+//      Array.from({ length: numPages}).forEach((_, i) => {
+//        actions.createPages({
+//          path : i === 0 ? '/' : `/${i + 1}`,
+//          component : require.resolve("./src/pages/index.js"),
+//          context:{
+//            limit : postPerPage,
+//            skip : i * postPerPage,
+//            numPages,
+//           currentPage: i + 1,
+//          }
+//        })
+//      })
+
+
+//  }
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 

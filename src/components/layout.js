@@ -1,9 +1,12 @@
 import * as React from "react"
 import { Link } from "gatsby"
 
-import 'C:/Users/Branden/Desktop/GIT Projects/frontend_Gatsby/node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { NavigationBar } from '../components/navigationbar';
+import { Nav } from "."
+import { Container, FeatureImage } from "."
+
+// import 'C:/Users/Branden/Desktop/GIT Projects/frontend_Gatsby/node_modules/bootstrap/dist/css/bootstrap.min.css';
+// import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { NavigationBar } from '../components/navigationbar';
 
 
 const Layout = ({ location, title, children }) => {
@@ -25,21 +28,23 @@ const Layout = ({ location, title, children }) => {
     )
   }
 
+//   <React.Fragment>
+//   <Router>
+//     // <NavigationBar />
+//   //</Router>
+// //</React.Fragment> 
   return (
-    <div className="global-wrapper" data-is-root-path={isRootPath}>
-      <React.Fragment>
-        <Router>
-           <NavigationBar />
-        </Router>
-      </React.Fragment>
+    <Container data-is-root-path={isRootPath}>
+      <Nav/>
       <header className="global-header">{header}</header>
-      <main>{children}</main>
+      <main>
+      <FeatureImage/>{children}</main>
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
         <a href="https://www.gatsbyjs.com">Gatsby</a>
       </footer>
-    </div>
+    </Container>
   )
 }
 
