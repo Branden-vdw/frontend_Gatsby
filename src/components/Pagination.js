@@ -13,13 +13,6 @@ export const Pagination =({countPages, currentPage, root}) => {
         return [...Array(size).keys()].map(i => i + startAt)
     }
 
-    if(countPages === 1) {
-        return null
-    }
-
-
-
-
     return(
         <PaginationWrapper >
             {currentPage !==0 && <Link style={{ textDecoration:'none',}} to ={Home}> <div className="pagination-link-elements">1</div></Link>}
