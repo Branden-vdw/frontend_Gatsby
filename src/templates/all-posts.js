@@ -1,20 +1,22 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { Pagination } from "../components/Pagination"
 
 
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
-const BlogIndex = ({ data, location }) => {
+const BlogIndex = ({ data, location ,pageContext}) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.edges
-  // const {currentPage, numPages} = pageContext
-  // const isFirst = currentPage === 1
-  // const isLast = currentPage === numPages
-  // const prevPage = currentPage - 1 === 1 ? "/" : `/${currentPage - 1}`
-  // const nextPage= `/${currentPage + 1}`
+  const {currentPage, numPages} = pageContext
+  const isFirst = currentPage === 1
+  const isLast = currentPage === numPages
+  const prevPage = currentPage - 1 === 1 ? "/blog" : `/blog/${currentPage - 1}`
+  const nextPage= `/${currentPage + 1}`
+
   if (posts.length === 0) {
     return (
       <Layout location={location} title={siteTitle} PostTitle={"Blog"}>
@@ -26,7 +28,7 @@ const BlogIndex = ({ data, location }) => {
         </p>
       </Layout>
     )
-          }
+  }
 
   return (
     <Layout location={location} title={siteTitle} PostTitle={"Blog"} >
@@ -48,11 +50,11 @@ const BlogIndex = ({ data, location }) => {
                    
                   <p className="date" >{post.node.frontmatter.date}</p>
                    <header><h2 className="title">
-                   {title}
+                      {title}
                   </h2></header>
 
                 <section>
-                  <p className="description" dangerouslySetInnerHTML={{
+                  <p className="description"dangerouslySetInnerHTML={{
                       __html: post.node.frontmatter.description || post.node.excerpt,
                     }}
                     itemProp="description"/>
@@ -65,27 +67,28 @@ const BlogIndex = ({ data, location }) => {
               
           )
         })}
-                    {/* <Pagination
+                    <Pagination
             isFirst={isFirst}
             isLast={isLast}
             prevPage={prevPage}
             nextPage={nextPage}
             
-            /> */}
+            />
         </div>
     </Layout>
   )
- } 
+}
 
 export default BlogIndex
 
 export const pageQuery = graphql`
-  query AllPosts {
+  query AllPostsQuery ( $postsLimit:Int!, $skipPosts: Int!) {
     site {
       siteMetadata {
         title
       }
-    }allMarkdownRemark(sort: { fields: [frontmatter___date], order: ASC }) {
+    }
+    allMarkdownRemark(limit: $postsLimit, skip:  $skipPosts, sort: { fields: [frontmatter___date], order: ASC }) {
      edges{
       node {
         excerpt

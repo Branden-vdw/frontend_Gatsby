@@ -1,27 +1,25 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
+import { GatsbyImage, getImage} from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
-  /** Add code to get image from query here **/
+  const HeroImage = getImage(data.markdownRemark.frontmatter.image)/** Add code to get image from query here **/
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} title={siteTitle} PostTitle={post.frontmatter.title}>
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
-      />
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
+      /><div className="container-item-BlogPicture">
+ 
         <header>
+        <GatsbyImage image={HeroImage} alt = "this is a picture" />
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
         </header>
@@ -30,7 +28,7 @@ const BlogPostTemplate = ({ data, location }) => {
           itemProp="articleBody"
         />
         <hr />
-      </article>
+      </div>
       <nav className="blog-post-nav">
         <ul
           style={{
@@ -65,7 +63,7 @@ export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostBySlug(
-    $id: String!
+    $id: String
     $previousPostId: String
     $nextPostId: String
   ) {
@@ -82,8 +80,16 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
-        # Add gatsby image query here
+        image {
+          childImageSharp {
+            gatsbyImageData(
+         layout: CONSTRAINED
+         placeholder: BLURRED
+         formats: [AUTO, WEBP, AVIF]
+       )
+        }            
       }
+    }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
       fields {
