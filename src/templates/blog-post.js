@@ -12,16 +12,12 @@ const BlogPostTemplate = ({ data, location }) => {
   const { previous, next } = data
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout location={location} title={siteTitle} PostTitle={post.frontmatter.title}>
       <SEO
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
-      />
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
+      /><div className="container-item-BlogPicture">
+ 
         <header>
         <GatsbyImage image={HeroImage} alt = "this is a picture" />
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
@@ -32,7 +28,7 @@ const BlogPostTemplate = ({ data, location }) => {
           itemProp="articleBody"
         />
         <hr />
-      </article>
+      </div>
       <nav className="blog-post-nav">
         <ul
           style={{
@@ -87,7 +83,7 @@ export const pageQuery = graphql`
         image {
           childImageSharp {
             gatsbyImageData(
-         layout: FIXED
+         layout: CONSTRAINED
          placeholder: BLURRED
          formats: [AUTO, WEBP, AVIF]
        )
