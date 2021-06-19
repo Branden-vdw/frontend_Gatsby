@@ -254,11 +254,7 @@ a:focus {
   margin-bottom: var(--spacing-12);
 }
 
-/* .main-heading {
-  font-size: var(--fontSize-7);
-  margin: 0;
-  color: brown;
-} */
+
 
 .post-list-item {
   margin-bottom: var(--spacing-8);
@@ -285,6 +281,7 @@ a:focus {
   font-family: var(--font-heading);
   text-decoration: none;
   font-size: var(--fontSize-3);
+  color: #000033;
 }
 
 .bio {
@@ -324,12 +321,20 @@ a:focus {
 .grid-container-site{
   display: grid;
   grid-template-columns: 1fr repeat(3, minmax(auto,250px)) 1fr;
-  grid-template-rows: 2rem 4rem auto 65px auto;
+  grid-template-rows: 2rem 4rem auto auto auto;
   background: #F0F0F0 0% 0% no-repeat padding-box;
   opacity: 1;
   gap:2rem 0;
   height: 100%;
 
+}
+
+.header-footer-home {
+  font-weight: var(--fontWeight-bold);
+  font-family: var(--font-heading);
+  text-decoration: none;
+  font-size: var(--fontSize-3);
+  color: #000033;
 }
 
 .grid-container {
@@ -344,18 +349,6 @@ a:focus {
   
 }
 
-/* .grid-container-images > div {
-  background: #FFFFFF 0% 0% no-repeat padding-box;
-  box-shadow: 0px 3px 10px #00000029;
-  border-radius: 7px;
-  opacity: 1;
-  left: auto;
-  top: 10rem;
-  margin-bottom: 1rem;
-  height: 350px;
-  width: 15rem;
-} */
-
 .column{
   background: #FFFFFF 0% 0% no-repeat padding-box;
   width:250px;
@@ -369,55 +362,9 @@ a:focus {
   text-overflow: clip;
 }
 
-/* .row:after {
-  content: "";
-  display: table;
-  clear: both;
-} */
-
-/* .gallery{
-  float: left;
-  top: 274px;
-  height: 100%;
-  width: auto;
-
-} */
-
 .gallery-image-hover :hover {
   border: 1px solid #777;
 }
-
-/* .gallery-image{
-  top: 274px;
-  left: auto;
-  width: 250px;
-  height: 344px;
-  border-radius: 7px 7px 0px 0px;
-  opacity: 1;
-
-} */
-
-/* .desc {
-  margin:1px;
-  text-align: left;
-  font: normal normal normal Montserrat;
-  letter-spacing: 0px;
-  color: #707070;
-  opacity: 1;
-  font-size: 1vw;
-  text-overflow: hidden;
-  
-} */
-
-/* .desc-date{
-  text-align: left;
-font: normal normal normal  Montserrat;
-letter-spacing: 0px;
-color: #812a2a;
-opacity: 1;
-margin: 0;
-padding: 0;
-} */
 
 .container-item-footer{
   grid-column: 2 / span 3;
@@ -428,28 +375,6 @@ padding: 0;
   justify-content: space-between;
   display:flex;
 }
-
-
-/* .float{
-  float: left;
-} */
-
-/* .Blog-card{
-    border-radius: 7px;
-    width: calc(33.3333% - 40px);
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 10px #00000029;
-    opacity: 1;
-    text-align: center;
-    float: left;
-    @media (max-width: 768px) {
-      margin: 10px 20px;
-      width: calc(100% - 40px);
-      &:first-child {
-        margin-top: 20px;
-      }
-    }
-  } */
 
 .container-item-footer-excess1{
   grid-column: 1;
@@ -497,13 +422,6 @@ opacity: 1;
 margin-bottom: 2px;
 }
 
-.container-item-header{
-  grid-column: 2;
-  grid-row: 1;
-  padding:10px;
-  text-overflow: ellipsis;
-  display: flex;
-}
 
 .container-item-body{
   grid-column: 2 /span 3;
@@ -566,18 +484,6 @@ color: #707070;
 opacity: 1
 }
 
-/* .container-item-BlogPicture{
-  grid-column: 1/ span 4;
-  grid-row:3;
-  padding-bottom: 2rem;
-} */
-
-
-   /* .Blog-card image{
-      width:100%;
-      height:100%;  
-    } */
-    
     .date{
       text-align: left;
       font-family: "Montserrat";
@@ -616,48 +522,30 @@ opacity: 1
       margin-left: 20px;
       margin-bottom: 10px;
     }
-/* 
-.center{
-  grid-row:4 ;
-  grid-column: 2/span 3;
-  text-align: center;
-} */
-
-/* .pagination{
-  display: inline-block;
-  text-align: center;
-} */
 
 
-.pagination-not-first {
-  
-  color: black;
-  /* padding: 8px 16px;
+.current-page {
+  background-color: #000033;
+   color: white;
+  box-shadow: 0px 3px 6px #00000029;
+border-radius: 3px;
+padding: 8px 16px;
+text-decoration: none;
+margin: 0 4px; 
+}
+
+.pagination-link-elements a:hover:not(.active) {background-color: #ddd;}
+
+.pagination-link-elements{
+  padding: 8px 16px;
   text-decoration: none;
   margin: 0 4px;
   transition: background-color .3s;
   box-shadow: 0px 3px 6px #00000029;
-border-radius: 3px; */
+border-radius: 3px;
+color: black;
+
 }
-
-.pagination-first-page {
-  background-color: #000033;
-  /* color: white;
-  box-shadow: 0px 3px 6px #00000029;
-border-radius: 3px; */
-}
-
-/* .pagination a:hover:not(.active) {background-color: #ddd;}
-
-.pagination-link-elements{
-  font-size:0.87rem;
-     line-height:1.125rem;
-     font-weight:400;
-     text-decoration:none;
-     margin:0 2rem;
-        text-decoration:underline;
-
-} */
 
 
 
