@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import { GatsbyImage, getImage} from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
@@ -9,7 +9,7 @@ const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
   const HeroImage = getImage(data.markdownRemark.frontmatter.image)/** Add code to get image from query here **/
   const siteTitle = data.site.siteMetadata?.title || `Title`
-  const { previous, next } = data
+ 
 
   return (
     <Layout location={location} title={siteTitle} PostTitle={post.frontmatter.title}>
@@ -29,32 +29,7 @@ const BlogPostTemplate = ({ data, location }) => {
         />
         <hr />
       </div>
-      <nav className="blog-post-nav">
-        <ul
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
-          <li>
-            {previous && (
-              <Link to={previous.fields.slug} rel="prev">
-                ← {previous.frontmatter.title}
-              </Link>
-            )}
-          </li>
-          <li>
-            {next && (
-              <Link to={next.fields.slug} rel="next">
-                {next.frontmatter.title} →
-              </Link>
-            )}
-          </li>
-        </ul>
-      </nav>
+      
     </Layout>
   )
 }
@@ -64,8 +39,7 @@ export default BlogPostTemplate
 export const pageQuery = graphql`
   query BlogPostBySlug(
     $id: String
-    $previousPostId: String
-    $nextPostId: String
+    
   ) {
     site {
       siteMetadata {
@@ -83,7 +57,7 @@ export const pageQuery = graphql`
         image {
           childImageSharp {
             gatsbyImageData(
-         layout: CONSTRAINED
+         layout: CONSTRAINED         
          placeholder: BLURRED
          formats: [AUTO, WEBP, AVIF]
        )
@@ -91,21 +65,6 @@ export const pageQuery = graphql`
       }
     }
     }
-    previous: markdownRemark(id: { eq: $previousPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-      }
-    }
-    next: markdownRemark(id: { eq: $nextPostId }) {
-      fields {
-        slug
-      }
-      frontmatter {
-        title
-      }
-    }
+    
   }
 `

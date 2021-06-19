@@ -11,15 +11,11 @@ import SEO from "../components/seo"
 const BlogIndex = ({ data, location ,pageContext}) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const posts = data.allMarkdownRemark.edges
-  const {currentPage, numPages} = pageContext
-  const isFirst = currentPage === 1
-  const isLast = currentPage === numPages
-  const prevPage = currentPage - 1 === 1 ? "/blog" : `/blog/${currentPage - 1}`
-  const nextPage= `/${currentPage + 1}`
+
 
   if (posts.length === 0) {
     return (
-      <Layout location={location} title={siteTitle} PostTitle={"Blog"}>
+      <Layout location={location} title={siteTitle} PostTitle={"Blog"} >
         <SEO title="All posts" />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
@@ -55,7 +51,7 @@ const BlogIndex = ({ data, location ,pageContext}) => {
 
                 <section>
                   <p className="description"dangerouslySetInnerHTML={{
-                      __html: post.node.frontmatter.description || post.node.excerpt,
+                      __html: post.node.excerpt,
                     }}
                     itemProp="description"/>
                  
@@ -68,10 +64,9 @@ const BlogIndex = ({ data, location ,pageContext}) => {
           )
         })}
                     <Pagination
-            isFirst={isFirst}
-            isLast={isLast}
-            prevPage={prevPage}
-            nextPage={nextPage}
+            countPages={pageContext.numPages}
+            currentPage={pageContext.page}
+            root={`/`}
             
             />
         </div>
@@ -82,13 +77,13 @@ const BlogIndex = ({ data, location ,pageContext}) => {
 export default BlogIndex
 
 export const pageQuery = graphql`
-  query AllPostsQuery ( $postsLimit:Int!, $skipPosts: Int!) {
+  query AllPostsQuery  ( $skip:Int!, $limit:Int! ){
     site {
       siteMetadata {
         title
       }
     }
-    allMarkdownRemark(limit: $postsLimit, skip:  $skipPosts, sort: { fields: [frontmatter___date], order: ASC }) {
+    allMarkdownRemark(skip: $skip, limit: $limit, sort: { fields: [frontmatter___date], order: ASC }) {
      edges{
       node {
         excerpt

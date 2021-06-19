@@ -8,7 +8,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
 
   //Define all-posts.js page
-  const indexPage = path.resolve(`./src/templates/all-posts.js`)
+  const indexPage = path.resolve(`./src/templates/indexPage.js`)
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(
@@ -51,35 +51,31 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const numPages = Math.ceil(posts.length / postPerPage)
 
     Array.from({length:numPages}).forEach((_, index) => {
-     const postsLimit = postPerPage
-     const skipPosts = index*postPerPage
+     const Limit = postPerPage
+     const Skip = index*postPerPage
      createPage({
-        path : index === 0? '/blog' : `/blog/${index}`,
-        component : indexPage
-        ,
+        path : index === 0? '/' : `/${index }`,
+        component : indexPage,
         context:{
-          page:index,
-          limit:postsLimit,
-          skip:skipPosts,
+          skip:Skip,
+          limit:Limit,
           numPages,
           postPerPage,
-         currentPage: index + 1,
+         page: index ,
         },
       })
     })
 
   if (posts.length > 0) {
     posts.forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].node.id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].node.id
+     
 
       createPage({
         path: post.node.fields.slug,
         component: blogPost,
         context: {
           id: post.node.id,
-          previousPostId,
-          nextPostId,
+          
         },
       })
     })
@@ -89,40 +85,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
 }
 
-//  exports.createPages = async ({ actions, graphql}) => {
-//   const data = await graphql(`
-//   {
-//     allMarkdownRemark {
-//       nodes {
-//         id
-//         fields {
-//           slug
-//         }
-//         excerpt
-//       }
-//     }
-//   } 
-//   `)
-//    //Create paginated pages for posts
-//    const postPerPage = 3
 
-//    const numPages = Math.ceil(data.data.allMarkdownRemark.nodes.length / postPerPage)
-
-//      Array.from({ length: numPages}).forEach((_, i) => {
-//        actions.createPage({
-//          path : i === 0 ? '/' : `/${i + 1}`,
-//          component : require.resolve("./src/pages/index.js"),
-//          context:{
-//            limit : postPerPage,
-//            skip : i * postPerPage,
-//            numPages,
-//           currentPage: i + 1,
-//          }
-//        })
-//      })
-
-
-//  }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
